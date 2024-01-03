@@ -2,8 +2,8 @@ const notes = require('express').Router();
 const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
 const fs = require('fs');
-const require_db = require('../db/db.json');
-const { readFile, writeFile } = require('fs/promises');
+//const require_db = require('../db/db.json');
+//const { readFile, writeFile } = require('fs/promises');
 
 notes.get('/', (req, res) => {
     readFromFile("./db/db.json").then(
@@ -31,15 +31,14 @@ notes.delete('/:id', (req, res) => {
     console.log('req.body: ')
     console.log(req.body); // example: { deleteNote_id: 'sd41' }, already parsed
     const requestID = req.body.deleteNote_id;
-    let parsedDb = require_db;
-    //requestArray.push(parsedDb);
-    //console.log(`requestID: ${requestID}`);
-    //console.log("ParsedDb(before splice): ")
+    let parsedDb = require('../db/db.json');
+    console.log(`requestID: ${requestID}`);
+    console.log("ParsedDb(before splice): ")
     console.log(parsedDb);
     if (requestID) {
         let findID = (item) => item.id === requestID;
-        // console.log(`findID: ${findID}`);
-        // console.log(parsedDb.findIndex(findID));
+         console.log(`findID: ${findID}`);
+         console.log(parsedDb.findIndex(findID));
         if (parsedDb.findIndex(findID) !== -1) {
             parsedDb.splice(parsedDb.findIndex(findID), 1);
             console.log("parsedDby(after splice): ");
