@@ -34,7 +34,12 @@ const getNotes = () =>
     headers: {
       'Content-Type': 'application/json'
     }
-  });
+  })
+    .then((data) => data)
+    .catch((error) => {
+      console.error('Error:', error);
+    })
+
 
 const saveNote = (note) =>
   fetch('/api/notes', {
@@ -50,7 +55,8 @@ const deleteNote = (id) =>
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    body: JSON.stringify({deleteNote_id:id})
   });
 
 const renderActiveNote = () => {
@@ -77,11 +83,19 @@ const handleNoteSave = () => {
     title: noteTitle.value,
     text: noteText.value
   };
+  console.log(newNote);
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
-  });
+  }).catch((err) => { console.log(`error message: ${err}`) });
 };
+// pass:savenote() save new note fetch the /api/notes path using post method, send one json object.
+//  getAndRenderNotes = () => getNotes().then(renderNoteList)
+// pass: getnotes():get method to get json file from db.json
+// renderNoteList() 
+// renderActiveNote()
+
+
 
 // Delete the clicked note
 const handleNoteDelete = (e) => {
