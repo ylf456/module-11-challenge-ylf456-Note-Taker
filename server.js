@@ -1,24 +1,19 @@
 const express = require('express');
 const path = require('path');
+const PORT = process.env.PORT || 3001;
+const app = express();
+const api = require('./routes/index.js');
 
-const app = express()
-// Todo: change port syntax for heroku deployment
-const PORT = 3001;
-
-// TODO: Invoke app.use() and serve static files from the '/public' folder
 app.use(express.static('public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/api',api);  //routing:  notes path will be  ~/api/notes/
 
-app.get('/', (req, res) => res.send('Navigate to /send or /routes'));
-
-app.get('/send', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/send.html'))
+app.get('/notes', (req, res) =>
+  res.sendFile(path.join(__dirname, 'public/notes.html'))
 );
 
-// TODO: Create a route that will serve up the `public/paths.html` page
-app.get('/paths', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/paths.html'))
-);
 
 app.listen(PORT, () =>
-  console.log(`Example app listening at http://localhost:${PORT}`)
+  console.log(`local deployment: Example app listening at http://localhost:${PORT}`)
 );
