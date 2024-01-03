@@ -1,4 +1,5 @@
 const notes = require('express').Router();
+const { parse } = require('path');
 const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
 const fs = require('fs');
@@ -18,6 +19,7 @@ notes.post('/', (req, res) => {
         // if (activeNote.id) eventlistener use id for condition check
         const newNote = { title, text, id: uuid(), };
         readAndAppend(newNote, './db/db.json');
+        readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
     }
     else {
         res.json('error in adding new note');
@@ -37,18 +39,19 @@ notes.delete('/:id', (req, res) => {
     console.log(parsedDb);
     if (requestID) {
         let findID = (item) => item.id === requestID;
-         console.log(`findID: ${findID}`);
-         console.log(parsedDb.findIndex(findID));
+        console.log(`findID: ${findID}`);
+        console.log(parsedDb.findIndex(findID));
         if (parsedDb.findIndex(findID) !== -1) {
             parsedDb.splice(parsedDb.findIndex(findID), 1);
             console.log("parsedDby(after splice): ");
             console.log(parsedDb);
             fs.writeFile('./db/db.json', JSON.stringify(parsedDb), (err) => err ? console.info(err) : console.info('successfully deleted one note'))
             res.json('successfully deleted note');
-            parsedDb = [];
+            parsedDb = require('../db/db.json');
+
         }
     } else { res.error('Error in deleting note') }
-    
+
 }
 )
 
