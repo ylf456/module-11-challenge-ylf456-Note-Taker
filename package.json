@@ -1,20 +1,20 @@
 {
   "name": "note-taker",
   "version": "1.0.0",
-  "description": "",
+  "description": "This web-based note taker was created using front-end webpage and back-end server by ylf456.",
   "main": "server.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node server.js"
   },
-
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "express": "^4.16.4",
+    
     "jest": "^24.9.0"
   },
   "directories": {},
-  "dependencies": { 
+  "dependencies": {
     "express": "^4.16.4"
   }
 }
