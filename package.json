@@ -14,6 +14,7 @@
     "jest": "^24.9.0"
   },
   "directories": {},
-  "dependencies": { "express": "^4.16.4"
+  "dependencies": { 
+    "express": "^4.16.4"
   }
 }
